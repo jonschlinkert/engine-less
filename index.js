@@ -32,12 +32,13 @@ var defaults = {
 
 /**
  * Less string support. Process the given `str` of less and invoke
- * the callback `callback(err, str)`.
+ * the callback `callback(err, css)`.
  *
  * ```js
- * var less = require('engine-less');
- * less.render(str, {}, function (err, css) {
+ * var str = '@red: #900;\n.foo {color: @red;}';
+ * engine.render(str, function (err, css) {
  *   console.log(css);
+ *   //=> '.foo {\n  color: #990000;\n}\n'
  * });
  * ```
  *
@@ -74,12 +75,13 @@ engine.render = function render(str, options, cb) {
 
 /**
  * Less file support. Process a `.less` file at the given `fp` and
- * callback `callback(err, str)`.
+ * callback `callback(err, css)`.
  *
  * ```js
  * var less = require('engine-less');
- * less.renderFile('test/fixtures/styles.less', {}, function (err, css) {
+ * less.renderFile('my-styles.less', {}, function (err, css) {
  *   console.log(css);
+ *   //=> '.aaa {\n  color: blue;\n}\n'
  * });
  * ```
  *
