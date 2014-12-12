@@ -1,0 +1,75 @@
+{
+  "name": "engine-less",
+  "description": "Consolidate-style engine for rendering .less files.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/engine-less",
+  "author": {
+    "name": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonschlinkert/engine-less.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/engine-less/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jonschlinkert/engine-less/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "engine-utils": "^0.1.0",
+    "extend-shallow": "^0.2.0",
+    "less": "^2.1.1"
+  },
+  "keywords": [
+    "assembleengine",
+    "bootstrap",
+    "compile",
+    "compiler",
+    "consolidate",
+    "css",
+    "engine",
+    "express",
+    "file",
+    "files",
+    "gradients",
+    "less",
+    "less.js",
+    "lesscss",
+    "mixins",
+    "nested",
+    "nesting",
+    "parser",
+    "pre",
+    "pre-process",
+    "preprocess",
+    "preprocessor",
+    "process",
+    "read",
+    "render",
+    "string",
+    "style",
+    "styles",
+    "stylesheet",
+    "templateengine",
+    "variable",
+    "variables",
+    "verbengine"
+  ]
+}
