@@ -28,8 +28,10 @@
     "test": "mocha -R spec"
   },
   "devDependencies": {
+    "assemble": "git://github.com/assemble/assemble#v0.6.0",
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "verb": "^0.3.8"
   },
   "dependencies": {
     "chalk": "^0.5.1",
