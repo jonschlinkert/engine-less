@@ -1,7 +1,5 @@
 'use strict';
 
-process.env.DEBUG = '*';
-
 /**
  * Module dependencies.
  */
