@@ -17,10 +17,14 @@ var less = require('less');
 var engine = utils.fromStringRenderer('less');
 
 /**
- * Common defaults
+ * engine defaults
  */
 
-var defaults = {
+engine.defaults = {
+  src: {ext: '.less'},
+  dest: {ext: '.css'},
+  layout: false,
+
   lessRenderMode: 'string',
   silent: false,
   compress: false,
@@ -52,7 +56,7 @@ engine.render = function render(str, options, cb) {
     options = {};
   }
 
-  options = extend({}, defaults, options);
+  options = extend({}, engine.defaults, options);
   try {
     less.render(str, options, function (err, res) {
       if (err) {
@@ -60,9 +64,9 @@ engine.render = function render(str, options, cb) {
         return;
       }
       if (options.lessRenderMode === 'object') {
-        cb(null, res, '.css');
+        cb(null, res);
       } else {
-        cb(null, res.css, '.css');
+        cb(null, res.css);
       }
     });
   } catch (err) {
@@ -95,7 +99,7 @@ engine.renderFile = function renderFile(fp, options, cb) {
     options = {};
   }
 
-  options = extend({}, defaults, options);
+  options = extend({}, engine.defaults, options);
   try {
     fs.readFile(fp, 'utf8', function (err, str) {
       engine.render(str, options, cb);
