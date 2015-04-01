@@ -23,7 +23,7 @@ var engine = utils.fromStringRenderer('less');
 engine.options = {
   src: {ext: '.less'},
   dest: {ext: '.css'},
-  layout: false,
+  layout: null,
 
   lessRenderMode: 'string',
   silent: false,
