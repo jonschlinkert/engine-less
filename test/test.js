@@ -13,8 +13,8 @@ var verb = require('verb');
 var engine = require('..');
 
 describe('.render()', function() {
-  it('should expose engine defaults:', function() {
-    engine.defaults.should.have.properties('dest', 'src', 'layout');
+  it('should expose engine options:', function() {
+    engine.options.should.have.properties('dest', 'src', 'layout');
   });
 
   it('should process a LESS string.', function(done) {

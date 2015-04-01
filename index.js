@@ -20,7 +20,7 @@ var engine = utils.fromStringRenderer('less');
  * engine defaults
  */
 
-engine.defaults = {
+engine.options = {
   src: {ext: '.less'},
   dest: {ext: '.css'},
   layout: false,
@@ -56,7 +56,7 @@ engine.render = function render(str, options, cb) {
     options = {};
   }
 
-  options = extend({}, engine.defaults, options);
+  options = extend({}, engine.options, options);
   try {
     less.render(str, options, function (err, res) {
       if (err) {
@@ -99,7 +99,7 @@ engine.renderFile = function renderFile(fp, options, cb) {
     options = {};
   }
 
-  options = extend({}, engine.defaults, options);
+  options = extend({}, engine.options, options);
   try {
     fs.readFile(fp, 'utf8', function (err, str) {
       engine.render(str, options, cb);
