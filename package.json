@@ -14,10 +14,7 @@
   "bugs": {
     "url": "https://github.com/jonschlinkert/engine-less/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/jonschlinkert/engine-less/blob/master/LICENSE"
-  },
+  "license": "MIT",
   "files": [
     "index.js"
   ],
@@ -29,10 +26,10 @@
     "test": "mocha"
   },
   "dependencies": {
-    "chalk": "^1.0.0",
+    "ansi-red": "^0.1.1",
     "engine-utils": "^0.1.1",
-    "extend-shallow": "^1.1.2",
-    "less": "^2.4.0"
+    "extend-shallow": "^2.0.1",
+    "less": "^2.5.1"
   },
   "devDependencies": {
     "assemble": "^0.6.0-beta.5",
