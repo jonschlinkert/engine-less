@@ -7,6 +7,7 @@
 var fs = require('fs');
 var utils = require('engine-utils');
 var extend = require('extend-shallow');
+var pick = require('object.pick');
 var red = require('ansi-red');
 
 /**
@@ -37,6 +38,31 @@ engine.options = {
   paths: [],
 };
 
+var optsKeys = [
+  'chunkInput',
+  'compress',
+  'dumpLineNumbers',
+  'ieCompat',
+  'importantScope',
+  'importMultiple',
+  'insecure',
+  'javascriptEnabled',
+  'mime',
+  'paths',
+  'pluginManager',
+  'processImports',
+  'reference',
+  'relativeUrls',
+  'rootpath',
+  'sourceMap',
+  'strictImports',
+  'strictMath',
+  'strictUnits',
+  'syncImport',
+  'urlArgs',
+  'useFileCache'
+];
+
 /**
  * Less string support. Process the given `str` of less and invoke
  * the callback `callback(err, css)`.
@@ -61,23 +87,27 @@ engine.render = function render(str, options, cb) {
     options = {};
   }
 
-  options = extend({}, engine.options, options);
+  options = options || {};
   extend(options, options.settings);
 
+  // only pass valid options to less
+  var opts = pick(options, optsKeys.concat(Object.keys(engine.options)));
+  opts = extend({}, engine.options, opts);
+
   try {
-    engine.less.render(str, options, function (err, res) {
+    engine.less.render(str, opts, function (err, res) {
       if (err) {
-        cb(logError(err, options));
+        cb(logError(err, opts));
         return;
       }
-      if (options.lessRenderMode === 'object') {
+      if (opts.lessRenderMode === 'object') {
         cb(null, res);
       } else {
         cb(null, res.css);
       }
     });
   } catch (err) {
-    cb(logError(err, options));
+    cb(logError(err, opts));
     return;
   }
 };
