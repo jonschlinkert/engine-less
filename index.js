@@ -7,14 +7,19 @@
 var fs = require('fs');
 var utils = require('engine-utils');
 var extend = require('extend-shallow');
-var chalk = require('chalk');
-var less = require('less');
+var red = require('ansi-red');
 
 /**
  * Less support.
  */
 
 var engine = utils.fromStringRenderer('less');
+
+/**
+ * Expose `less`, to give users access to the same instance
+ */
+
+engine.less = require.less || (require.less = require('less'));
 
 /**
  * engine defaults
@@ -57,8 +62,10 @@ engine.render = function render(str, options, cb) {
   }
 
   options = extend({}, engine.options, options);
+  extend(options, options.settings);
+
   try {
-    less.render(str, options, function (err, res) {
+    engine.less.render(str, options, function (err, res) {
       if (err) {
         cb(logError(err, options));
         return;
@@ -100,6 +107,8 @@ engine.renderFile = function renderFile(fp, options, cb) {
   }
 
   options = extend({}, engine.options, options);
+  extend(options, options.settings);
+
   try {
     fs.readFile(fp, 'utf8', function (err, str) {
       engine.render(str, options, cb);
@@ -125,8 +134,6 @@ function logError(err, options) {
     + ' in file: ' + err.filename
     + ' line no: ' + err.line;
 
-  if (options.silent !== true) {
-    console.log(chalk.red('%j'), err);
-  }
+  console.log(red('%j'), err);
   return err;
 }
