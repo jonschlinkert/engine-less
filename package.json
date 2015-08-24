@@ -1,7 +1,7 @@
 {
   "name": "engine-less",
   "description": "Consolidate-style engine for rendering .less files.",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "homepage": "https://github.com/jonschlinkert/engine-less",
   "author": {
     "name": "Jon Schlinkert",
@@ -29,7 +29,8 @@
     "ansi-red": "^0.1.1",
     "engine-utils": "^0.1.1",
     "extend-shallow": "^2.0.1",
-    "less": "^2.5.1"
+    "less": "^2.5.1",
+    "object.pick": "^1.1.1"
   },
   "devDependencies": {
     "assemble": "^0.6.0-beta.5",
