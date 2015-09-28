@@ -5,16 +5,13 @@
  */
 
 var fs = require('fs');
-var utils = require('engine-utils');
-var extend = require('extend-shallow');
-var pick = require('object.pick');
-var red = require('ansi-red');
+var utils = require('./utils');
 
 /**
  * Less support.
  */
 
-var engine = utils.fromStringRenderer('less');
+var engine = utils.engineUtils.fromStringRenderer('less');
 
 /**
  * Expose `less`, to give users access to the same instance
@@ -42,6 +39,8 @@ var optsKeys = [
   'chunkInput',
   'compress',
   'dumpLineNumbers',
+  'globalVars',
+  'modifyVars',
   'ieCompat',
   'importantScope',
   'importMultiple',
@@ -87,28 +86,25 @@ engine.render = function render(str, options, cb) {
     options = {};
   }
 
-  options = options || {};
-  extend(options, options.settings);
-
+  options = utils.merge({}, options, options.settings);
   // only pass valid options to less
-  var opts = pick(options, optsKeys.concat(Object.keys(engine.options)));
-  opts = extend({}, engine.options, opts);
+  var keys = optsKeys.concat(Object.keys(engine.options));
+  var opts = utils.pick(options, keys);
+  utils.merge(opts, engine.options, options);
 
   try {
     engine.less.render(str, opts, function (err, res) {
-      if (err) {
-        cb(logError(err, opts));
-        return;
-      }
+      if (err) return cb(formatError(err));
+
       if (opts.lessRenderMode === 'object') {
         cb(null, res);
       } else {
+        engine.res = res;
         cb(null, res.css);
       }
     });
   } catch (err) {
-    cb(logError(err, opts));
-    return;
+    cb(err);
   }
 };
 
@@ -136,16 +132,14 @@ engine.renderFile = function renderFile(fp, options, cb) {
     options = {};
   }
 
-  options = extend({}, engine.options, options);
-  extend(options, options.settings);
-
   try {
-    fs.readFile(fp, 'utf8', function (err, str) {
-      engine.render(str, options, cb);
-    });
+    // arguments[0] = fs.readFileSync(arguments[0], 'utf8');
+    // engine.render.apply(engine, arguments);
+    var str = fs.readFileSync(fp, 'utf8');
+    utils.merge(engine.options. options);
+    engine.render(str, options, cb);
   } catch (err) {
-    cb(logError(err, options));
-    return;
+    cb(err);
   }
 };
 
@@ -159,11 +153,9 @@ module.exports = engine;
  * Helper function
  */
 
-function logError(err, options) {
+function formatError(err) {
   err.message = err.message
     + ' in file: ' + err.filename
     + ' line no: ' + err.line;
-
-  console.log(red('%j'), err);
   return err;
 }
